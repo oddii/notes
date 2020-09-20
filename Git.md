@@ -86,29 +86,29 @@
 - 已修改，已暂存状态：绿色的 `M`
 - 添加后已暂存状态：红色的 `A`
 
-##### 2.4.2、git add [filename]
+##### 2.4.2、git add [file-name]
 
 将文件加入暂存区
 
-- `filename`：文件名
+- `file-name`：文件名称
 
-##### 2.4.3、git reset HEAD [filename]
+##### 2.4.3、git reset HEAD [file-name]
 
 将暂存区的文件取消暂存，取消暂存后，文件会回到暂存前的状态，如果之前是未跟踪，则回到未跟踪状态，其它状态同理
 
-- `filename`：文件名
+- `file-name`：文件名称
 
 ##### 2.4.4、git commit -m [message]
 
-将暂存区的文件修改提交到本地仓库
+将暂存区的文件修改提交到本地仓库，如果想不每次先操作 `git add [filename]` 再 `commmit`，可以使用 `git commit -a -m [message]` 直接跳过保存至缓存区直接提交
 
 - `message`：更新信息/日志信息
 
-##### 2.4.5、git rm [filename]
+##### 2.4.5、git rm [file-name]
 
 将文件删除并将此次操作加入暂存区
 
-- `filename`：文件名
+- `file-name`：文件名称
 
 ##### 2.4.6、将文件添加至忽略列表
 
@@ -221,3 +221,51 @@ doc/**/*.pdf
 合并分支，有时候合并操作不会如此顺利，如果你在两个不同的分支中，对同一个文件的同一个部分进行了不同的修改，`Git` 就没有办法合并它们，同时会提示文件冲突，此时需要我们打开冲突的文件并修复冲突内容，最后执行 `git add` 命令来标识冲突已解决
 
 - `branch-name`：分支名称
+
+##### 2.6.6、git branch -d [branch-name]
+
+删除分支，如果要删除的分支中进行了一些开发操作，此时上面的命令并不会删除分支，如果坚持要删除分支，可以将命令改为 `git branch -D [branch-name]`
+
+- `branch-name`：分支名称	
+
+#### 2.7、标签操作
+
+`Git` 可以给历史中的某一个提交打上标签，以示重要，比较有代表性的是人们会使用这个功能来标记发布节点（`v1.0`、`v1.2`等），标签指的是某个分支某个特定时间点的状态，通过标签，可以很方便的切换到标记时的状态
+
+##### 2.7.1、git tag
+
+列出所有标签，如果想查看某个 `tag` 信息，可以使用 `git show [tag-name]`
+
+##### 2.7.2、git tag [tag-name]
+
+创建一个标签
+
+- `tag-name`：标签名称
+
+##### 2.7.3、git push [remote-name] [tag-name]
+
+将标签推送至远程仓库
+
+- `tag-name`：标签名称
+
+##### 2.7.4、git checkout -b [branch-name] [tag-name]
+
+检出标签，需要先新建一个分支，然后指向某个 `tag`
+
+- `branch-name`：新的分支名称
+- `tag-name`：已存在的标签名称
+
+##### 2.7.5、git tag -d [tag-name]  
+
+删除本地标签
+
+- `tag-name`：标签名称
+
+##### 2.7.6、git push origin :refs/tags/[tag-name]
+
+删除远程标签
+
+- `tag-name`：标签名称
+
+
+
