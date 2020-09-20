@@ -149,11 +149,11 @@ doc/**/*.pdf
 - `git remote -v`：查看关联的远程仓库 `fetch` 和 `push`
 - `git remote show origin`：查看关联远程仓库的详细信息
 
-##### 2.5.2、git remote add [shortname] [url]
+##### 2.5.2、git remote add [remote-name] [url]
 
 添加远程仓库
 
-- `shortname` ：分支简称，通常可随意填写，通常为 `origin`
+- `remote-name`：仓库名称，可随意填写，通常为 `origin`
 - `url`：远程仓库 `url` 地址，需要填写一个已创建的远程仓库 `url` 地址
 
 ##### 2.5.3、git clone [url]
@@ -161,3 +161,22 @@ doc/**/*.pdf
 克隆远程仓库，默认配置下远程 `Git` 仓库中的每一个文件的每一个版本都将被拉取下来
 
 - `url`：远程仓库 `url` 地址，需要填写一个已创建的远程仓库 `url` 地址
+
+##### 2.5.4、git remote rm [remote-name]
+
+移除本地仓库与远程仓库的关联
+
+- `remote-name`：仓库名称，通常为 `origin`
+
+##### 2.5.5、git fetch 与 git pull
+
+`git fetch` 是从远程仓库获取最新版本到本地仓库，不会自动 `merge`
+
+`git pull` 也是从远程仓库获取最新版本到本地仓库，会自动 `merge`，注意：如果当前本地仓库不是从远程仓库克隆的，而是本地创建的仓库，并且仓库中存在文件，此时再从远程仓库拉取文件的时候会报错（`fatal: refusing to merge unrelated histories`），解决此问题可以在 `git pull` 命令后加入参数 `--allow-unrelated-histories`
+
+##### 2.5.6、git push [remote-name] [branch-name]
+
+推送到远程仓库，将本地仓库 `commit` 后的代码推送到远程仓库中，同步两个仓库中的文件
+
+- `remote-name`：仓库名称，通常为 `origin`
+- `branch-name`：分支名称
