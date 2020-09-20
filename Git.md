@@ -86,15 +86,78 @@
 - 已修改，已暂存状态：绿色的 `M`
 - 添加后已暂存状态：红色的 `A`
 
-##### 2.4.2、git add 文件名
+##### 2.4.2、git add [filename]
 
-将未跟踪的文件加入暂存区
+将文件加入暂存区
 
-##### 2.4.3、git reset HEAD 文件名
+- `filename`：文件名
+
+##### 2.4.3、git reset HEAD [filename]
 
 将暂存区的文件取消暂存，取消暂存后，文件会回到暂存前的状态，如果之前是未跟踪，则回到未跟踪状态，其它状态同理
 
-##### 2.4.4、git commit -m 提交信息
+- `filename`：文件名
 
-将暂存区的文件修改提交
+##### 2.4.4、git commit -m [message]
 
+将暂存区的文件修改提交到本地仓库
+
+- `message`：更新信息/日志信息
+
+##### 2.4.5、git rm [filename]
+
+将文件删除并将此次操作加入暂存区
+
+- `filename`：文件名
+
+##### 2.4.6、将文件添加至忽略列表
+
+在工作目录中创建一个名为：`.gitignore` 文件，下面是一个实例：
+
+```gitignore
+# no .a files
+*.a
+
+# but do track lib.a, even though you're ignoring .a files above
+!lib.a
+
+# only ignore the TODO file in the current directory, not subdir/TODO
+/TODO
+
+# ignore all files in the build/ directory
+build/
+
+# ignore doc/notes.txt, but not doc/server/arch.txt
+doc/*.txt
+
+# ignore all .pdf files in the doc/ directory
+doc/**/*.pdf
+```
+
+##### 2.4.7、git log
+
+查看日志操作，如果日志信息太多，可以使用回车查看下一条，或输入 `q` 退出查看
+
+#### 2.5、远程仓库操作
+
+##### 2.5.1、git remote
+
+查看远程仓库，列出指定的每一个远程服务器的简写，如果已经克隆了该仓库，那么至少应该能看到 `origin`，这是 `Git` 克隆的仓库服务器的默认名字
+
+查看更多信息：
+
+- `git remote -v`：查看关联的远程仓库 `fetch` 和 `push`
+- `git remote show origin`：查看关联远程仓库的详细信息
+
+##### 2.5.2、git remote add [shortname] [url]
+
+添加远程仓库
+
+- `shortname` ：分支简称，通常可随意填写，通常为 `origin`
+- `url`：远程仓库 `url` 地址，需要填写一个已创建的远程仓库 `url` 地址
+
+##### 2.5.3、git clone [url]
+
+克隆远程仓库，默认配置下远程 `Git` 仓库中的每一个文件的每一个版本都将被拉取下来
+
+- `url`：远程仓库 `url` 地址，需要填写一个已创建的远程仓库 `url` 地址
