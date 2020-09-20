@@ -166,11 +166,15 @@ doc/**/*.pdf
 
 移除本地仓库与远程仓库的关联
 
-- `remote-name`：仓库名称，通常为 `origin`
+- `remote-name`：仓库名称，默认为 `origin`
 
 ##### 2.5.5、git fetch 与 git pull
 
+> git fetch
+
 `git fetch` 是从远程仓库获取最新版本到本地仓库，不会自动 `merge`
+
+> git pull
 
 `git pull` 也是从远程仓库获取最新版本到本地仓库，会自动 `merge`，注意：如果当前本地仓库不是从远程仓库克隆的，而是本地创建的仓库，并且仓库中存在文件，此时再从远程仓库拉取文件的时候会报错（`fatal: refusing to merge unrelated histories`），解决此问题可以在 `git pull` 命令后加入参数 `--allow-unrelated-histories`
 
@@ -178,5 +182,25 @@ doc/**/*.pdf
 
 推送到远程仓库，将本地仓库 `commit` 后的代码推送到远程仓库中，同步两个仓库中的文件
 
-- `remote-name`：仓库名称，通常为 `origin`
-- `branch-name`：分支名称
+- `remote-name`：仓库名称，默认为 `origin`
+- `branch-name`：分支名称，默认为 `master`
+
+#### 2.6、分支操作
+
+几乎所有的版本控制系统都以某种形式支持分支，使用分支意味着你可以把你的工作从主线开发上分离开来，以免影响开发主线，`Git` 的 `master` 分支并不是一个特殊分支，它跟其他分支没有区别，之所以每个仓库都有一个 `master` 分支，是因为 `git init` 默认创建它，并且大多数人都懒得去改动它
+
+##### 2.6.1、git branch
+
+查看分支
+
+- `git branch`：列出所有本地分支
+- `git branch -r`：列出所有远程分支
+- `git branch -a`：列出所有本地分支和远程分支
+
+##### 2.6.2、git branch [branch-name]
+
+创建分支
+
+##### 2.6.3、git checkout [branch-name]
+
+切换分支
