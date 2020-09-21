@@ -133,3 +133,8 @@
    this.$set(this.isResponse, i, true)
    ```
 
+## 2020-09-21 周一
+
+1. **明天有空研究下 `oh-my-zsh` 和 `tmux`**
+2. 
+
