@@ -150,6 +150,10 @@ doc/**/*.pdf
 
 - `file-commit-id`：文件提交 `id`
 
+##### 2.4.10、git commit --amend
+
+修正最近一次 `commit` 操作，不需要自己重新添加 `message`，会使用最近一次 `commit` 的 `message`
+
 #### 2.5、远程仓库操作
 
 ##### 2.5.1、git remote
