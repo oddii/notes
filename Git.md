@@ -138,6 +138,18 @@ doc/**/*.pdf
 
 查看日志操作，如果日志信息太多，可以使用回车查看下一条，或输入 `q` 退出查看
 
+##### 2.4.8、git checkout -- [file-name]
+
+撤销对文件的修改，请务必记得 `git checkout -- [file-name]` 是一个危险的命令。 你对那个文件在本地的任何修改都会消失——Git 会用最近提交的版本覆盖掉它。 除非你确实清楚不想要对那个文件的本地修改了，否则请不要使用这个命令
+
+- `file-name`：文件名称
+
+##### 2.4.9、git checkout [file-commit-id]
+
+切换到当前分支的某个历史版本，可以先用 `git log` 查看日志确认版本的 `commit-id`，再使用 `git checkout [file-commit-id]` 进行切换
+
+- `file-commit-id`：文件提交 `id`
+
 #### 2.5、远程仓库操作
 
 ##### 2.5.1、git remote
