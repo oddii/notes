@@ -148,3 +148,85 @@ async function test() {
 }
 ```
 
+## 2、`Promise.prototype.then()` 第二个参数和 `Promise.prototype.catch()` 捕获错误有什么区别？
+
+首先需要区分2个概念
+
+1. `Promise.reject()` 是用来抛出异常的，`Promise.prototype.catch()` 是用来处理异常的
+
+2. `reject` 是 `Promise` 的方法，`then` 和 `catch` 是 `Promise` 实例的方法
+
+3. `catch` 只是一个语法糖而已，还是通过 `then` 来处理的，大概如下所示：
+
+   ```js
+   Promise.prototype.catch = function(fn){
+     return this.then(null, fn)
+   }
+   ```
+
+> **区别**
+
+- 如果在 `then` 的第一个参数里抛出了异常，后面的 `catch` 能捕获到，而 `then` 的第二个参数捕获不到
+
+  ```js
+  const promise = new Promise((resolve, reject) => {
+      resolve()
+  })
+  
+  promise
+      .then(function () {
+          throw new Error()
+      }, function (err) {
+          console.log(`then got ${err}`)
+      })
+      .catch(function (err) {
+          console.log(`catch got ${err}`);
+      })
+  
+  //	catch got Error
+  ```
+
+- `then` 的第二个参数和 `catch` 捕获错误信息的时候会采取就近原则，如果 `Promise` 内部报错，`reject` 抛出错误后，`then` 的第二个参数和 `catch` 方法都存在的情况下，只有 `then` 的第二个参数能捕获到，如果 `then` 的第二个参数不存在，则 `catch` 方法能捕获到
+
+   ```js
+  const promise = new Promise((resolve, reject) => {
+      reject('error')
+  })
+  
+  promise
+      .then(function () {
+          
+      }, function (err) {
+          console.log(`then got ${err}`)
+      })
+      .catch(function (err) {
+          console.log(`catch got ${err}`);
+      })
+  
+  //	then got error
+  ```
+
+  ```js
+  const promise = new Promise((resolve, reject) => {
+      reject('error')
+  })
+  
+  promise
+      .then(function () {
+          
+      })
+      .catch(function (err) {
+          console.log(`catch got ${err}`);
+      })
+  
+  //	catch got error
+  ```
+
+## 3、JS 中的隐式类型转换
+
+显示转换：将值从一种类型转换为另一个种类型
+
+隐式转换：将值**强制**从一种类型转换为另一种类型
+
+   
+
