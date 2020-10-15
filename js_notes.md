@@ -228,5 +228,18 @@ async function test() {
 
 隐式转换：将值**强制**从一种类型转换为另一种类型
 
-   
+## 4、JS 将一个页面重定向去另一个页面
+
+`window.location.replace()` 最适合模拟 `HTTP` 重定向，`window.location.replace()` 优于使用 `window.location.href`，因为 `replace()` 不会将原始页面保留在会话历史记录中，这意味着用户将不会陷入永无休止回退按钮
+
+如果要模拟点击链接，可以使用 `location.href`，如果要模拟 `HTTP` 重定向，请使用 `location.replace`
+
+## 5、如何从 JS 对象中删除属性
+
+```js
+delete obj.property
+delete obj['property']
+```
+
+
 
