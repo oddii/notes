@@ -139,3 +139,175 @@
 2. 学习了下 `CSS` 选择器和  `JS` 的 `forEach()` 这块相关的知识
 3. 学习了下使用  `promise.then()` 第二个参数和 `promise.catch()`捕获错误有什么区别
 
+## 2020-09-22 周二
+
+1. 学习了下 `JS` 的类型转换这块相关知识
+2. 学习了下数据结构
+3. 做了几道力扣的题
+
+## 2020-09-23 周三
+
+1. 为 `gc_web` 项目做准备，拿到 `UI` 图与需求文档后对项目组件划分、交互问题进行了讨论
+2. 开发 `gc_web` 的 `GcButton` 组件
+3. 开发 `gc_web` 的 `GcCard` 组件
+4. 开发 `gc_web` 的 `GcAvatar` 组件
+
+## 2020-09-24 周四
+
+1. 开发 `gc_web` 的 `GcUpload` 组件
+2. 开发 `gc_web` 的 `GcLoading` 组件
+
+## 2020-09-25 周五
+
+1. 开发 `gc_web` 的 `ForGot` 页面
+2. 开发 `gc_web` 的 `SignIn` 页面
+3. 开发 `gc_web` 的 `SignUp` 页面
+
+## 2020-09-27 周日
+
+1. 开发 `gc_web` 的 `DiffText` 组件
+2. 开发 `gc_web` 的 `DiffTextGroup` 组件
+3. 开发 `gc_web` 的 `Pagination` 组件
+4. 开发 `gc_web` 的 `Tag` 组件
+
+## 2020-09-28 周一
+
+1. 想把 `gc_web` 里的图片都转为 `base64`，但其实不一定能优化网页性能，`base64` 编码的机制**有空需要看下**，包括它的优点和缺点，不要滥用
+2. 学习了下根据屏幕自适应那块 `CSS` 的单位知识，本来想用 `rem` 做自适应的，但还是要根据后续自适应的设计稿重新选择
+3. 开发 `gc_web` 的 `LayoutHeader` 组件
+4. 开发 `gc_web` 的 `default2` 布局组件
+
+## 2020-09-29 周二
+
+1. 块级元素没有办法使 `transform` 生效，`rotate` 要改变旋转中心可以用 `transform-origin` 设置，这块的机制**有空需要看下**
+2. 开发 `gc_web` 的 `ToolBar` 组件
+3. 修改基于 `default2` 布局组件的页面样式与 `LayoutHeader` 组件等系列组件
+
+## 2020-09-30 周三
+
+1. `flex` 布局会引起的子元素设置 `height: 100%` 失效，这块的机制**有空需要看下**
+2. 开发 `gc_web` 的 `Check` 页面
+3. 开发 `gc_web` 的 `Setting` 页面
+
+## 2020-10-09 周五
+
+1. 将 `weex_layout` 的“星星点灯”分离为新旧两版，并更新部署教程
+2. 前后端联调 `gc_web` 的 `SignIn` 页面
+
+## 2020-10-10 周六
+
+1. 开发 `gc_web` 的 `UpdatePass` 页面
+2. 修改 `gc_web` 的 `Setting` 页面样式
+
+## 2020-10-12 周一
+
+1. 修改 `toast` 样式
+2. 研究了下在 `nuxt`使用 `vuex` 的操作，在 `nuxt` 的 `vuex` 中，可以通过 `this._vm` 拿到 `vue` 实例，再调用 `vue` 实例里面的方法进行相应的操作，比如 `this._vm.$toast()` 这种
+3. 将 `user` 相关的接口都使用 `vuex` 整理了，明天对不同页面进行联调
+4. `localStorage` 或者 `sessionStorage` 无法设置过期时间，可以选择在存储时将过期时间戳一起存进去，取的时候再校验时间，直接点可以选择用 `web-storage-cache` 这个库
+
+## 2020-10-13 周二
+
+1. 想用 `v-model` 绑定从 `vuex` 中异步获得值，可以使用 `mapGetters` 结合 `watch`，再在 `data` 定义字段，最后在 `watch` 中进行改变，同时要设置 `watch` 的 `immediate` 为 `true`（表示该回调将会在侦听开始之后被立即调用）
+
+    ```vue
+    data() {
+      return {
+        formData: {},
+        head_img: '',
+      }
+    },
+      watch: {
+        userInfo: {
+          immediate: true,
+            handler(newVal, oldVal) {
+            if (newVal) {
+              this.formData = newVal
+              this.head_img = newVal.head_img
+            }
+          },
+        },
+      },
+    ```
+
+2. `nuxt` 里使用路由拦截如果直接使用 `router.beforeEach` 或者使用组件独享守卫，都会有刷新白屏的问题，正确的使用路由守卫是使用**中间件**的方法，并且中间件支持异步操作
+
+    在 `middleware` 中创建 `auth.js`
+
+    ```js
+    import { localCache, sessionCache } from '@/utils/cache'
+    
+    export default function ({ store, redirect }) {
+      const isClient = process.client
+    
+      const { getters, dispatch } = store
+      const userInfo = getters['user/userInfo']
+    
+      let userId
+    
+      // 在客户端
+      if (isClient) {
+        userId = localCache.get('_user') || sessionCache.get('_user') || null
+      }
+    
+      // 未获取到，重定向到登陆页面
+      if (userInfo === null) {
+        if (userId === null) {
+          redirect('/signin')
+        } else {
+          dispatch('user/getUserInfo', userId)
+        }
+      }
+    }
+    ```
+
+    在要使用路由中间件的组件中配置：
+
+    ```js
+    export default {
+      middleware: 'auth',
+    }
+    ```
+
+    详情可以参考：
+
+    - https://zh.nuxtjs.org/api/pages-middleware/
+    - https://codesandbox.io/s/github/nuxt/nuxt.js/tree/dev/examples/auth-routes?from-embed=&file=/middleware/auth.js
+    - https://blog.csdn.net/Py1807A/article/details/105380224
+
+3. `nuxt` 路由守卫的种类：https://www.cnblogs.com/qiulongxing/p/13641495.html，**有空可以归纳下**
+
+## 2020-10-14 周三
+
+1. 将 `localStorage` 或 `sessionStorage` 里存储的 `userId` 使用 `CryptoJS` 加密了一下（简单做个伪安全处理）
+
+    相关链接可以参考：
+
+    - https://www.jianshu.com/p/a47477e8126a
+    - https://juejin.im/post/6844903742370742279
+    - https://juejin.im/post/6844904159875956750
+
+2. `axios` 也可以监听上传进度和下载进度，只要在他的.`config` 传入一个 `onUploadProgress` 或 `onDownloadProgress` 回调即可
+
+    ```js
+    axios.post('/more/post',{
+      onUploadProgress(progressEvent) {
+        // 监听上传进度
+      }
+    })
+    
+    axios.get('/more/get',{
+      onDownloadProgress(progressEvent) {
+        // 监听下载进度
+      }
+    })
+    
+    
+    ```
+
+3. 开发 `Progress` 组件，但是还没有完善，目前只有 `line` 的样式，其他样式后续看需求或者时间再处理
+
+## 2020-10-15 周四
+
+1. 考虑了一下要不要做按钮的防抖，但还是选择做按钮的状态改变，后续如果有时间可以跟 UI 讨论下是否加入按钮的 loading 样式
+2. 
