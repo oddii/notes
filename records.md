@@ -275,7 +275,19 @@
     - https://codesandbox.io/s/github/nuxt/nuxt.js/tree/dev/examples/auth-routes?from-embed=&file=/middleware/auth.js
     - https://blog.csdn.net/Py1807A/article/details/105380224
 
-3. `nuxt` 路由守卫的种类：https://www.cnblogs.com/qiulongxing/p/13641495.html，**有空可以归纳下**
+3. `nuxt` 路由守卫的前置和后置的实现方式：
+
+    - 前置路由守卫：
+        - 全局守卫：
+            - `nuxt.config` 中配置 `middleware`
+            - `layouts` 中配置 `middleware`
+            - `plugins` 中使用 `beforeEach()`（不推荐）
+        - 局部守卫：
+            - 组件中配置 `middleware`
+    - 后置路由守卫：
+        - 全局守卫：
+            - `plugins` 中使用 `afterEach()`
+            - 使用 `vue` 的 `beforeRouteLeave()` 钩子
 
 ## 2020-10-14 周三
 
@@ -310,4 +322,4 @@
 ## 2020-10-15 周四
 
 1. 考虑了一下要不要做按钮的防抖，但还是选择做按钮的状态改变，后续如果有时间可以跟 UI 讨论下是否加入按钮的 loading 样式
-2. 
+2. 整理了一下之前遗留的学习问题
