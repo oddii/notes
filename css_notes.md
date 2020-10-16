@@ -257,3 +257,65 @@ div span { background-color: DodgerBlue; }
 https://developer.mozilla.org/zh-CN/docs/Web/CSS/Descendant_combinator
 ```
 
+## 4、object-fit 与 object-position
+
+> **object**
+
+首先要了解下这里的 `object` 为何物？
+
+官方文档解释是这样的：
+
+The `object-fit` CSS property specifies how the contents of a replaced element should be fitted to the box established by its used **height** and **width**.
+
+The `object-position` property determines the alignment of the replaced element inside its box.
+
+虽然官方文档没有说 `object` 具体是什么，我们可以从 `W3C`、`MDN` 中查到，这里的 `object` 实际上指的是 `replaced element` （替换元素）
+
+> **替换元素**
+
+不是所有的元素都叫**替换元素**，在 `CSS` 中，**替换元素**指的是：
+
+其内容不受 `CSS` 视觉格式化模型控制的元素，比如 `img`，嵌入的文档（ `iframe` 之类）或者 `applet`，比如说，`img` 元素的内容通常会被其 `src` 属性指定的图像**替换**掉
+
+**这是什么意思？**
+
+首先要清楚 `img` 的结构原理，`img` 是一个元素，`img` 就像是一个 `div` 一样，包裹着里面的图片
+
+<img src="/Users/hellotalk/Downloads/img结构.jpg" alt="img结构" style="zoom:80%;" />
+
+`img` 后面调用的 `src="xxx.jpg"` 就是图片的本体，它可以替换 `img` 的内容，所以不要想着 `img` 就是单纯的一张图，其实它本身是有结构的，所以它就属于一个**替换元素**，而这两者之间的关系是独立的，所以为 `img` 设置宽高，其实是为 `img` 的**外壳**设置宽高，而不是其中的**替换元素**，这就是为什么 `object-fit` 能生效的原因，`object-fit`控制了 `src` 对应的替换内容的尺寸，或者包含，或者覆盖
+
+**替换元素**通常有其固有的尺寸：一个固有的**宽度**，一个固有的**高度**，一个固有的**比率**。比如一副位图有绝对指定的宽度和高度，从而也有固有的宽高比率。另一方面，其他文档也可能没有固有的尺寸，比如一个空白的 `html` 的文档
+
+`CSS` 渲染模型不考虑**替换元素**内容的渲染，这些替换元素的展现独立于 `CSS`，`object`、`video`、`textarea`、`input` 也是**替换元素**，`audio`、`canvas` 在某些特定情形下为**替换元素**
+
+就是说，`object-fit` 和 `object-position` 只针对替换元素有作用，也就是 `form` 表单家族控件系列、`img` 图片、`video` 等元素
+
+> **object-fit**
+
+`object-fit` 和 `object-position` 之间的关系有点类似于 `background-size` 和 `background-position`，无论是关系还是属性值，都有相似之处，因此我们在理解 `object-fit` 和 `object-position` 的时候，可以或多或少映射 `background-size` 和 `background-position`
+
+**object-fit 属性**
+
+- `fill`：中文释义“填充”，默认值，替换内容拉伸填满整个 `content box`, 不保证保持原有的比例
+- `contain`：中文释义“包含”，保持原有尺寸比例，保证替换内容尺寸一定可以在容器里面放得下。因此，此参数可能会在容器内留下空白
+- `cover`：中文释义“覆盖”，保持原有尺寸比例，保证替换内容尺寸一定大于容器尺寸，宽度和高度至少有一个和容器一致。因此，此参数可能会让替换内容（如图片）部分区域不可见
+- `none`：中文释义“无”，保持原有尺寸比例，同时保持替换内容原始尺寸大小
+- `scale-down`：中文释义“降低”，就好像依次设置了**none**或**contain**，最终呈现的是尺寸比较小的那个
+
+**使用注意**
+
+由上面的英文官方介绍我们知道，`object-fit` 需要为你使用的 `img` 设置 `width` 和 `height` 才能生效，因为，`img` 在没有设置宽度和高度时，它的宽高会跟随图片本身的大小，此时你设置 `object-fit` 是**无效**的
+
+目前，IE浏览器并不支持`object-fit`
+
+> **object-position**
+
+`object-position` 要比 `object-fit` 单纯的多，就是控制替换内容位置的。默认值是 `50% 50%`，也就是居中效果，所以，无论上一节 `object-fit` 值为那般，图片都是水平垂直居中的
+
+其可以使用 `calc` 实现相对右下角定位：
+
+```css
+object-position: calc(100% - 20px) calc(100% - 10px);
+```
+
