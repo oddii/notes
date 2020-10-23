@@ -309,3 +309,146 @@ delete obj['property']
 - `window.name` + `iframe`
 - `location.hash` + `iframe`
 
+## 7、DOM 获取 class 相关操作
+
+> **classList**
+
+`Element.classList` 是一个只读属性，返回一个元素的类属性的实时 `DOMTokenList` 集合，其本身是只读的，但是可以通过 `DOMTokenList` 的 `API` 进行其他操作修改 `DOM` 元素的类属性
+
+那这个 `DOMTokenList` 又是什么呢？
+
+> **DOMTokenList**
+
+`DOMTokenList` 接口表示一组空格分隔的标记，其总是区分大小写
+
+我们可以看一下它的数据结构：
+
+```js
+{
+  0:'container',
+  2:'container2',
+  length: 2,
+  value: 'container container2'
+}
+```
+
+其类似一个伪数组，索引从 `0` 开始，`DOMTokenList` 不可以通过 `length` 和索引改变它的值，但可以通过 `value` 改变它的值
+
+其会自动去除空格和重复项目，例如：
+
+```html
+<span class="    d   d e f"></span>
+```
+
+```js
+let span = document.querySelector("span")
+let classes = span.classList
+span.classList.add("x")
+span.textContent = `span classList is "${classes}"`
+```
+
+输出结果：
+
+```
+span classList is "d e f x"
+```
+
+**属性：**
+
+- `length`：只读，一个整数，表示存储在该对象里值的个数
+- `value`：该属性以
+
+**方法：**
+
+`DOMTokenList` 的方法较多，详细可以查看：https://developer.mozilla.org/zh-CN/docs/Web/API/DOMTokenList
+
+这里只列出兼容 `IE10` 或以上的方法：
+
+- `item(index)`：返回一个在列表中的索引的项
+- `contains(token)`：用于判断是否存在于列表中的标记，当`token`包含在列表中时返回`true`，否则返回`false`
+- `add(token)`：添加一个或多个标记（`token`）到 `DOMTokenList` 列表中，`IE` 不能添加多个！
+- `remove(token)`：从 `DOMTokenList` 列表中移除一个或多个标记 （`token`），`IE` 不能移除多个！
+
+所以 `DOM.classList` 能够调用相关 `API` 的方法就是其用返回的 `DOMTokenList` 的 `API` 再去修改类属性
+
+从上面我们也看出来了，这些操作并不兼容 `IE9`！！头疼，
+
+> **className**
+
+ `className` 是一个字符串变量，表示当前元素的`class`属性的值，可以是由空格分隔的多个`class`属性值
+
+由于它的兼容性优于 `classList`，所以通常可以使用它对 `classList` 进行兼容性处理（需进行 `babel` 处理）：
+
+```js
+export const hasClass = (() => {
+  const html = document.documentElement;
+  if ("classList" in html && typeof html.classList.contains === "function") {
+    return (elem, className) => {
+      if (typeof className !== "string") return false;
+      if (elem.nodeType === 1) {
+        return elem.classList.contains(className);
+      }
+      return false;
+    };
+  } else {
+    return (elem, className) => {
+      if (typeof className !== "string") return false;
+      if (elem.nodeType === 1) {
+        const classes = elem.className.split(/s+/);
+        const len = classes.length;
+        for (let i = 0; i < len; i++) {
+          if (classes[i] === className) {
+            return true;
+          }
+        }
+        return false;
+      }
+      return false;
+    };
+  }
+})();
+```
+
+## 8、in 与 hasOwnProperty
+
+> **in**
+
+**语法：**
+
+```js
+"prop" in object
+```
+
+**参数：**
+
+- `prop`：一个字符串类型或者 `Symbol` 类型的属性名或者数组索引（非 `symbol` 类型将会强制转为字符串）
+- `object`：检查它（或其原型链）是否包含具有指定名称的属性的对象
+
+如果指定的属性在指定的对象或其原型链中，则 `in` 运算符返回 `true`，对被删除或值为 `undefined` 的属性使用 `in` 运算符会返回 `false`
+
+**如果一个属性是从原型链上继承来的**，`in` 运算符也会返回 `true`
+
+> **hasOwnProperty**
+
+**语法：**
+
+```js
+obj.hasOwnProperty(prop)
+```
+
+**参数：**
+
+- 要检测的属性的 `String` 字符串形式表示的名称，或者 `Symbol`
+
+用来判断某个对象是否含有指定的属性的 `Boolean`
+
+这个方法可以用来检测一个对象是否含有特定的自身属性，即使属性的值是 `null` 或 `undefined`，只要属性存在，`hasOwnProperty` 依旧会返回 `true`
+
+和 `in` 运算符不同，**该方法会忽略掉那些从原型链上继承到的属性**
+
+> **结论**
+
+从上面加粗的文字就可以知道，`in` 运算符与 `hasOwnProperty` 最大的不同就是，`in` 运算符判断从原型链继承的属性仍然会返回 `true`，而 `hasOwnProperty` 则会返回 `false`
+
+`hasOwnProperty` 也会将 `ES6` 的 `getters` 和 `methods` 返回 `false`
+
