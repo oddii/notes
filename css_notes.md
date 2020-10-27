@@ -319,3 +319,74 @@ The `object-position` property determines the alignment of the replaced element 
 object-position: calc(100% - 20px) calc(100% - 10px);
 ```
 
+## 5、外容器是自适应的盒子，里层有两个盒子，一个固定高度，希望另一个要填满剩下的高度
+
+> **CSS3 弹性盒子解法**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="gb2312">
+    <title>Title</title>
+    <style>
+        .box {
+            width:200px;
+            height:300px;
+            background:red;
+            display:flex;
+            flex-direction:column;
+      	}
+        
+        .a {height:100px;background:green;}
+        .b {background:blue;flex:1}
+    </style>
+</head>
+<body>
+     <div class="box">
+         <div class="a"></div>
+         <div class="b"></div>
+     </div>
+</body>
+</html>
+```
+
+使用 `flex: 1` 将另一个盒子的填满剩下的位置
+
+> **纯 CSS 解法**
+
+```css
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="gb2312">
+    <title>Title</title>
+    <style>
+        body { height: 100%; padding: 0; margin: 0; }
+        .box { height: 400px; position: relative; }
+        .a { height: 100px; background: #ff0000; }
+        .b { background: #00ff00; width: 100%; position: absolute; top: 100px ; left: 0 ; bottom: 0;}
+    </style>
+</head>
+<body>
+     <div class="box">
+         <div class="a"></div>
+         <div class="b"></div>
+     </div>
+</body>
+</html>
+```
+
+将外容器设置为 `position: relative`，高度固定的盒子使用 `position: relative`，另一个盒子设置为
+
+```css
+b {
+  position: absolute;
+  top: 0;
+  rigth: 0;	//	or left: 0
+  bottom: 0;
+}
+```
+
+
+
