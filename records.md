@@ -366,3 +366,241 @@
 
 1. 肚子依旧不是很舒服，上了好几次厕所，晚上吃饭都蒸蛋加生菜了
 2. 跟着 `Meng To` 的教学视频学了一天的 `React Native`，感叹 `React Native` 在很多方面的便捷性，就是这个用 `styled-components` 写 `CSS` 的方式要多习惯熟悉
+
+## 2020-10-28 周三
+
+1. 继续学习 `React Native`，将第一阶段都学完了，开始接触 `Animated` 的效果
+2. 使用 `Contentful` 和 `graphql` 进行模拟数据并获得数据进行填充
+
+## 2020-10-29 周四
+
+1. 学习了很多的 `Animated` 效果，基本上要有动画效果的话就要使用 `Animated.createAnimatedCompoennt` 对需要动画效果的组件进行包裹，然后再配合自定义的动画
+2. `React` 的 `useState` 和 `useSelector` 同步异步问题明天要研究一下，因为这两个 `hooks` ，`Projects` 有两个 `Bug` 要修改，还要将 `Project` 的关闭按钮处理的更好，现在只使用 `opacity` 变为 0，这个元素还说会存在于 `Project` 上，还是会触发点击事件，这个交互体验会变差
+
+## 2020-10-30 周五
+
+1. 对 `useState` 无法即时修改值的这个问题进行了搜索，找到一种解决方案就是
+
+    ```js
+    useState(state => setState(newState))
+    ```
+
+    这样可以即时反馈 `state`  的值，但是具体是什么原理还需要有空整理一下
+
+2. 昨天发现的那个 `useSelector` 获取 `action` 的问题应该不是 `useSelector` 的问题，应该是 `React Native` 自身的 `PanResponder` 在 `create` 之后就只能获取一次外部的值，在  `componentWillMount` 这个生命周期使用 `PanResponder.create()` 好像能解决这个问题，但是函数组件中这个生命周期已被废弃，在 `stackoverflow` 找到解决方案！永远滴神！
+
+## 2020-11-2 周一
+
+1. 开始对后台公告管理项目 `backstate_notice` 进行开发评估和了解接口，选择使用 `Antd Pro` 进行一把梭！
+2. 本来想用 `ts` 进行开发，但是看了一下 `ts` 对快速熟悉 `Antd Pro` 有点费时间，还是选择先用 `js` 弄个 `demo` 出来，再在 `review` 的时候转回 `ts`
+
+## 2020-11-3 周二
+
+1. 学习了一下 `ts` 的基本操作
+2. 今天把公告列表的查询和 `Antd Pro` 的 `ProTable` 与 `ProForm` 的 `api` 熟悉了一下，由于 `Antd Pro` 之前没有用过，还是有不少新的坑要踩
+3. 学习了下 `umi hooks` 这个库，决定使用 `useRequest` 进行网络请求访问
+
+## 2020-11-4 周三
+
+1. 基本将公告列表目前除搜索外的功能给做完了，明天优化下细节的问题就准备重构一个 `ts` 项目了
+
+## 2020-11-5 周四
+
+1. 将公告列表使用 `ts` 重构了，目前没有什么大问题，但是还有那个**时间戳和选择语言需无法重复的问题需要处理一下**
+2. 上 `figma` 和 `drri~ ` 搜索了一下毕设的 UI 设计，找到了几个还不错的，明天建个项目试试
+
+## 2020-11-6 周五
+
+1. 开始写毕设的前端，学习怎么自定义 `zipper` 底部的 `tabbar`，但是发现图标组件 `@expo/vector-icons` 遇到了玄学的找不到字体文件问题，重新建几个项目都会有几率找不到字体文件。。差不多给搞了一整天
+2. 将后台公告项目丢上了 `GitLab`，**后期需要学习一下 `Git Flow` 这个东西**
+
+## 2020-11-9 周一
+
+1. 后台公告项目新增删除公告功能
+2. 将编辑公告使用多语言的时候，已选语言不会再出现的需求进行优化，现在调整和旧后台的表现一致
+3. 请教惠威将后台公告项目部署上测试环境，**后面要整理一下部署流程**
+
+## 2020-11-10 周二
+
+1. 请假回学校毕业证照片采集
+
+## 2020-11-11 周三
+
+1. 请假回学校毕业证照片采集
+
+## 2020-11-12 周四
+
+1. 开发 `zipper` 的 `TabBar` 组件
+2. 开发 `zipper` 的 `HomeScreen`
+
+## 2020-11-13 周五
+
+1. 对了一下邮件购买项目的获取商品数据接口，太麻烦了，接口文档也没有，下周继续联调好了
+2. 开发 `zipper` 的 `StudioScreen`
+3. 开发 `zipper` 的 `ProfileScreen`
+
+## 2020-11-16 周一
+
+1. 开始对接邮件购买项目的获取商品信息接口
+2. 开发 `zipper` 的 `ActivityScreen`、`AttentionScreen`、`LikedScreen`、`MessageScreen`，感觉写了一天这个- -，本来想看一下文章看看别人怎么实现 `TabView` 滑动吸顶效果，结果发现已经有人写好了，但是还需要作者 `Review`，赶紧的呀
+
+## 2020-11-17 周二
+
+1. 基本明白邮件购买项目获取商品怎么玩，基本信息已对接好，等笃志把 `vuex` 配置好就能基本完成对接
+2. 开发 `zipper` 的 `NotificationScreen`，`LoginScreen`、`QuickLoginScreen`、`RegisterScreen`、`ForgotPasswordScreen`
+3. 将 `open_english_latest` 的分词解释中的收藏按钮点击无反应的 `Bug` 修复了，原来是很久之前没有导入 `showProgress` 却用了它，尴尬这么久才被发现，究竟有没有人用这个收藏的。。
+
+## 2020-11-18 周三
+
+1. 将 `LoginScreen` 系列需要用到的 `InputText` 封装成了一个带 `Icon` 的 `AnimatedIconText` 组件
+2. 了解了一下正则中的捕获组和非捕获组的区别，**后面要自己整理一下**
+3. 将邮件购买项目的遍历推荐列表后，根据 `hp_userId` 顺序请求的商品详情的方法改成并发请求，确实并发网络请求要比代码里的两个嵌套循环要好点
+4. 学习了一下 React Native 的 `Bottom Modal` 怎么写（做了一篇阅读理解。。）
+
+## 2020-11-19 周四
+
+1. 将邮件购买项目获取推荐列表即商品信息的方法统一使用 `vuex` 进行管理
+2. 学习了一下 `React Native` 的下拉刷新动画处理
+3. 学习了一下 `React Native` 的进度条动画效果
+4. 了解了一下 `Github` 自己的 `readme.md` 的效果，**以后有空可以自己写一下好玩的 `readme`**
+
+## 2020-11-20 周五
+
+1. 学习了一下关于  `React` 的 `useRef` 这个 `hook` 的操作，理解更深刻了一下，其在`function` 组件内可以保存值而不会被 `re render` 的时候重新初始化，不但可以对 `dom` 进行引用 `reference`，还可以保存一些需要使用的实例对象，还使用其模拟 `class` 组件的 `componentDidUpdate`，如下：
+
+    ```react
+    const hasMounted = useRef(false)
+    
+    useEffect(() => {
+      if(hasMounted.current){
+        // do some thing
+      } else {
+    		hasMounted.current = true    
+      }
+    })
+    ```
+
+    **以后有空可以整理一下这篇文章**：https://medium.com/javascript-in-plain-english/react-useref-can-be-used-for-more-than-you-think-d4cfe7d90797
+
+2. 邮件购买项目根据公众号 id 获取商品详情信息的方法里，原本使用的
+   
+   ```js
+   Object.assign(
+     this.recommend.find((el) => el.hp_userid === item.hp_userid),
+     data[0]	//	需要数据
+   )
+   ```
+   
+   这样改变数组某个原先对象的值，即如下：
+   
+   ```
+   this.arr[index] = newValue
+   ```
+   
+   在 `vue2` 中不会被监听到，导致不会重新渲染页面的数据，要用 `$set` 或者 `vue2` 封装的数组 `splice` 方法对原数组进行处理，如下：
+   
+   ```js
+   this.$set(this.recommend, index, {
+     ...this.recommend[index],
+     ...data[0], //	需要数据
+   })
+   
+   // or
+   
+   this.recommend.splice(index, 1, {
+     ...this.recommend[index],
+     ...data[0], //	需要数据
+   })
+   console.log(this.recommend)
+   ```
+   
+3. 将邮件购买项目的多语言进行了配置
+
+## 2020-11-23 周一
+
+1. 邮件购买项目购买后商品信息展示逻辑调整
+
+2. 研究了一下 `zipper` 的 `bottomBar` 能否重写样式，但是要用到一个第三方库，较为麻烦，还是算了
+
+3. 研究了一下关于 `React Native` 的 `FlatList` 的上拉加载数据大概需要什么操作，并用 `react-persist` 这个库结合 `redux`、`react-redux` 对 `FlatList` 的数据进行持久化，写了一个 `demo`，并整理了一下，原来之前一直以为自己没用到定义 `action`，但是直接用 `useDispatch` 这样
+
+    ```js
+    dispatch({
+       type: "UPDATE_LIST_RESULTS",
+       items: list,
+    });
+    ```
+
+    ```js
+    ({
+      type: "UPDATE_LIST_RESULTS",
+       items: list,
+    })	
+    ```
+
+    这个东西就是一个 action，可以将它封装到 `action` 中统一管理，如：
+
+    ```js
+    import { UPDATE_LIST_RESULTS } from "../../constants/actions";
+    
+    export const updateListResults = (items: any) => ({
+      type: UPDATE_LIST_RESULTS,
+      items,
+    });
+    ```
+
+    这样外面就只要调用这个方法返回 `action` 对象即可
+
+    ```js
+    dispatch(updateListResults(list));
+    ```
+
+## 2020-11-24 周二
+
+1. 研究了一下 `braintree` 填银行卡后校验错误的逻辑，`braintree` 的错误校验需要在提交后用一堆回调函数进行捕获，也可以使用 `await`配合 `try/catch` 对错误进行捕获
+2. 调整了下后台公告项目的代码，将一些看的懂的，脚手架生成的不用的代码给删掉了，然后在公告字段新增了一个客户端状态字段
+3. 深入学习了一下 `memo`、`useCallback`、`useMemo` 的使用方式，**有空要自己整理一下那个博主的文章**
+4. 把邮件购买项目的一些小 `Bug` 和笃志调了一下
+
+## 2020-11-23 周三
+
+1. 将邮件购买项目的默认多语言逻辑调整了一下，将除了配置的多语言外其他全部默认为 `en`，并调整了一下折叠的代码
+2. 邮件购买项目在本地做了一个对商品购买后的缓存，以便马上区分是否已购买过
+3. 在判断 `{} !== {}` 的时候，忘记这两个是对象比较，比较的是他们的地址，返回的肯定是 `true`，如果需要判断一个对象是不是 `{}` 时，可以用 `Object.key(obj).length === 0` 去判断，因为 `Object.key(obj)` 会将 `{}` 变为 `[]`，此时再用数组的 `.length` 去判断即可
+4. 将后台公告项目的添加、修改公告时的默认语言调整为英文
+5. 将邮件购买项目的缓存使用 `web-storage-cache` 设置了一个三分钟的过期时间，并且添加了一个字段判断用户是否登陆后再拿商品信息
+6. 将邮件购买项目的展示图片高度样式调整了一下，并用公司的 `cdn` 把样式文件直接引入项目，后来又改了回去，因为查出是台湾 `tailwind` 自动加了一个清洗 `CSS` 的插件把其他样式文件干掉了
+
+## 2020-11-24 周四
+
+1. 将邮件购买项目的价格配合后端进行了一下转换处理
+
+2. 回顾了一下之前浏览的网页，发现使用 `React Hooks` 去模拟生命周期的时候，会将可以用
+
+    ```react
+    const useComponentWillMount = (func) => {
+      const willMount = useRef(true)
+      
+      if(willMount.current) func()
+      
+      willMount.current = false
+    }
+    
+    //	or
+    
+    const useComponentWillMount = (func) => {
+      useMemo(func, [])
+    }
+    ```
+
+    引起了一个思考，然后自己又去写了个 `demo` 发现，`useMemo` 和 `useCallback` 的执行都会比 `useEffect` 要快，所以 `useEffect` 是用来模拟 `componentDidMount` 等，**这个是为什么以后还要研究一下**
+
+    然后还对 `useCallback` 和 `useMemo` 的执行顺序研究了一下，发现是根据 `JS` 从上到下执行的，而且
+
+    ![image-20201126174647755](/Users/hellotalk/Library/Application Support/typora-user-images/image-20201126174647755.png)
+
+    这里可以看到
+
+    - `useCallback` 默认会返回一个函数，所以是用来**缓存函数的引用**
+    - `useMemo` 不会默认返回，可以指定返回一个值，所以是用来**缓存计算量较大的结果值**
+
