@@ -149,7 +149,6 @@ async function test() {
 ```
 
 ## 2、`Promise.prototype.then()` 第二个参数和 `Promise.prototype.catch()` 捕获错误有什么区别？
-
 首先需要区分2个概念
 
 1. `Promise.reject()` 是用来抛出异常的，`Promise.prototype.catch()` 是用来处理异常的
@@ -452,3 +451,61 @@ obj.hasOwnProperty(prop)
 
 `hasOwnProperty` 也会将 `ES6` 的 `getters` 和 `methods` 返回 `false`
 
+## 9、JS 获取 div 高度的方法、getComputedStyle
+
+> **object.offsetHeight**
+
+包括：元素内容 + `padding` + `border-width`
+
+> **object.clientHeight**
+
+包括：元素内容 + `padding`
+
+**区别：**
+
+从上述来看，这两个获取 `div` 高度的属性区别就是有无 `border-width`
+
+> **object.getBoundingClientRect()**
+
+- 该方法返回元素的大小及其相对于视口的位置（`CSS` 属性边框集合，即 `top`、`left`、`right`、`bottom`、`x`、`y`、`width`、`height`，且 `IE` 不兼容 `x`、`y`）
+
+- 如果是标准盒子模型，元素的尺寸等于 `width/height` + `padding` + `border-width` 的总和。如果 `box-sizing: border-box`，元素的的尺寸等于  `width/height`，当然，这个 `height` 也是如 `offsetHeight` 一样，包括元素内容 + `padding` + `border-width`
+- 而它如果被**空边框盒**（没有内容的边框）调用时会被忽略，返回的 `width`、`height` 值为 0
+- 除了`width` 和 `height` 以外的属性是相对于视图窗口的**左上角**来计算的
+
+但是我们如果想获得元素本身的高度呢？	
+
+> **window.getComputedStyle()**
+
+`window.getComputedStyle` 是一个可以获取的是最终应用在元素上的**所有** `CSS` 属性对象（即使没有 `CSS` 代码，也会把默认的祖宗八代都显示出来），返回的是一个 `CSS` 样式声明对象 `([object CSSStyleDeclaration])`，**只读**
+
+**语法：**
+
+```js
+let style = window.getComputedStyle(element, [pseudoElt(伪类)]);
+```
+
+**与 `style` 的区别：**
+
+- 只读与可写：`getComputedStyle` 是只读的，而 `style` 能屈能伸，可读可写
+- 获取的对象范围：`getComputedStyle` 是获取的是最终应用在元素上的所有 `CSS` 属性对象（即使没有CSS代码，也会把默认的祖宗八代都显示出来），而 `style` 只能获取元素 `style` 属性中的 `CSS` 样式，对于一个光秃秃的 `div` 元素来说，`element.style` 返回的对象 `length` 为 0
+
+所以如果我们只想获得高度，只需要结合 `getPropertyValue` 方法即可
+
+>**object.getPropertyValue**
+
+该方法返回一个 `DOMString`，其中包含请求的 `CSS` 属性的值，属性不支持驼峰写法，其还可以获得 `CSS` 原生变量值
+
+**语法：**
+
+```js
+var value = style.getPropertyValue(property);
+```
+
+所以上文如果只想获得高度，可以这样使用：
+
+```js
+let height = window.getComputedStyle(div).getPropertyValue('height')
+```
+
+当然，如果涉及到了兼容性问题，还可以使用 `getAttribute` 方法，该方法也可以访问 `CSS` 样式对象的属性。用法与 `getPropertyValue` 类似
