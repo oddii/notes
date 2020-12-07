@@ -638,3 +638,9 @@
 1. 开发 `HL` 首页改版项目样式
 2. 跟进了一下午的 `HL` 下架黑五出现的 `Bug`，其中笃志把中国用户的 `isFreeTrail` 条件在下架黑五的时候去掉了，然后就是后台配置出现了问题，无法从 `config_data` 中拿到 `month` 这个字段，导致计算月份价格的时候无法显示，展示错误
 
+## 2020-12-7 周一
+
+1. 对 `HL`  首页改版项目进行样式的调整，基本样式已经开发完了，但是后端还没有开发完接口
+2. 封装 `zipper` 的 `BottomModal` 和 `ResultModal`
+3. 将 `zipper` 的 `LoginScreen` 系列页面样式进行微调
+4. 将 `zipper` 的 `redux`、`react-redux`、`redux-persist` 使用 `typescript` 进行整合并整理
