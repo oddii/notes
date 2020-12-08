@@ -644,3 +644,9 @@
 2. 封装 `zipper` 的 `BottomModal` 和 `ResultModal`
 3. 将 `zipper` 的 `LoginScreen` 系列页面样式进行微调
 4. 将 `zipper` 的 `redux`、`react-redux`、`redux-persist` 使用 `typescript` 进行整合并整理
+
+## 2020-12-8 周二
+
+1. 将 `HL` 首页改版项目进行样式的调整，并根据后端返回数据结构 `mock` 了基本数据
+2. `HL` 首页改版项目测试评审，对交互逻辑进行探讨，现在首页不做播放操作，需要点击播放按钮然后跳转到详情页再播放
+3. 浏览了一下文章，但是感觉没有什么太有用的信息获取
