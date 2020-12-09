@@ -509,3 +509,44 @@ let height = window.getComputedStyle(div).getPropertyValue('height')
 ```
 
 当然，如果涉及到了兼容性问题，还可以使用 `getAttribute` 方法，该方法也可以访问 `CSS` 样式对象的属性。用法与 `getPropertyValue` 类似
+
+## 10、JS 判断一个对象是否为空对象
+
+- 在高版本的浏览器中可以这样使用
+
+  ```js
+  function isEmpty(value){
+    return value //	👈 null and undefined check
+    	&& Object.keys(value).length === 0
+    	&& value.constructor === Object
+  }
+  ```
+
+  为什么要加 `value.constructor === Object` 呢？
+
+  因为不加这个条件，`JS` 内置的对象也会被判断为空对象，如下：
+
+  ```js
+  function badEmptyCheck(value) {
+    return Object.keys(value).length === 0;
+  }
+  badEmptyCheck(new String());    // true 😱
+  badEmptyCheck(new Number());    // true 😱
+  badEmptyCheck(new Boolean());   // true 😱
+  badEmptyCheck(new Array());     // true 😱
+  badEmptyCheck(new RegExp());    // true 😱
+  badEmptyCheck(new Function());  // true 😱
+  badEmptyCheck(new Date());      // true 😱
+  ```
+
+- 在低版本的浏览器中可以这样使用
+
+  ```js
+  function isEmpty(value){
+  	return Object.prototype.toString.call(value) === '[object Object]'
+    	&& JSON.stringify(value) === '{}'
+  }
+  ```
+
+
+
