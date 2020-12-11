@@ -388,5 +388,47 @@ b {
 }
 ```
 
+## 6、画出扇形与半圆形
 
+> **半圆形**
+
+```css
+.half-circle {
+    width: 200px;
+    height: 100px;
+    background-color: skyblue;
+  
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border: 10px solid gray;
+    border-bottom: 0;
+    
+    box-sizing: border-box;
+}
+```
+
+```html
+<div class="half-circle"></div>
+```
+
+> **扇形**
+
+```css
+.half-circle {
+    width: 100px;
+    height: 100px;
+    background-color: skyblue;
+  
+    border-top-left-radius: 100px;
+    border: 10px solid gray;
+    border-right: 0;
+    border-bottom: 0;
+    
+    box-sizing: border-box;
+}
+```
+
+```html
+<div class="half-circle"></div>
+```
 
