@@ -548,5 +548,31 @@ let height = window.getComputedStyle(div).getPropertyValue('height')
   }
   ```
 
+## 11、JS 简易适配各种移动端页面方案
 
+```js
+/**
+	* 动态调整 html 的 font-size
+	* @param {string} el 目标元素
+	* @param {number} maxWidth 设计稿最大宽度
+	* @param {number} aliquot 分为多少等份
+*/
+function scales(el, maxWidth, aliquot) {
+  let width;
+  let htmlEl = document.documentElement
+
+  width = document.querySelector(el).offsetWidth
+  if (!width) {
+    width = htmlEl.offsetWidth
+  }
+
+  const scale = width / maxWidth
+
+  htmlEl.style.fontSize = aliquot * scale + 'px'
+}
+
+scales('.container', 375, 100)	//	意思就是把 375px 的设计稿分成 100 等份，每一等份为 1 rem
+```
+
+通过第一次加载 `JS` 后根据参照物调整 `html` 的 `font-size` ，然后结合 `CSS` 中的 `rem` 单位，达到适配各种移动端页面的操作
 
