@@ -690,6 +690,42 @@
 
 ## 2020-12-17 周四
 
-1. 继续修 `HL` 首页改版的 `Bug`，把大部分 `Bug` 都干掉了
+1. 继续修 `HL` 首页改版的 `Bug`，把大部分 `Bug` 都干掉了，文本超出需要用省略号的少了个 `text-overflow: ellipsis`
+
 2. 浏览了下邮件与 `Medium` 的文章，了解到 `PDF` 原来是一种矢量图，收藏了几个图标的网站，其他没有什么好记录的
-3. 修 `HL` 首页改版的时候遇到一个从详情页播放返回首页，暂停时不会上报学习时长的问题，和笃志调了一个下午，原因是 **明天过来写**
+
+3. 修 `HL` 首页改版的时候遇到一个从详情页播放返回首页，暂停时不会上报学习时长的问题，和笃志调了一个下午，原因是在 `home.js` 与 `detail.js` 中，处理播放暂停的方法 `playAct` 中有很多改变 `currentAudio`  值的地方，而 `bottomPlay` 这个底部播放器 `watch` 了这个传递的 `currentAudio` （在 `bottomPlay` 为 `audioInfo` 这个 `prop`），还是 `deep watch`，所以在处理播放状态（`playStatus`）的时候，就有可能会重复处理同一个 `playStatus`，这也可能导致播放器暂停了也在播放这个 `Bug`，笃志是在这个处理 `playStatus` 中对上报学习时长进行处理，在不在详情页与字幕页的页面直接根据 `playStatus` 进行上报，而忽略了 `home.js` 中多次改变 `currentAudio` 值的操作，对同一个 `playStatus` 没有进行判断，需要加上判断条件，才可能解决返回首页暂停时上报学习时长的问题，代码如下：
+
+   ```js
+   switch (newObj.playStatus) {
+     case 0:
+       if(oldObj) {	//	因为返回首页时初始化的时候 watch 后的 audioInfo 没有 oldObj，需要判断一下以免报错
+         if(newObj.playStatus !== oldObj.playStatus){	//	如果两种播放状态不同，才进行真正的暂停操作
+           this.stopLearning('暂停1')
+         }
+       } else {
+         this.stopLearning('暂停2')
+       }
+       break;
+     case 1:
+       if(oldObj) {	//	同上
+         if(newObj.playStatus !== oldObj.playStatus){	//	同上
+           this.startLearning('开始1')
+         }
+       } else {
+         this.startLearning('开始2')
+       }
+       break;
+   }
+   ```
+
+## 2020-12-18 周五
+
+1. 把昨天 `HL` 首页改版项目的播放器的那个返回首页暂停不上报学习时长的 `Bug` 又梳理了一遍，发现又有问题，原来是内存存的值的 `key` 值不相同导致
+2. 对 `List` 滚动时的遇到其他元素的 `appear` 事件与 `disappear` 事件触发时，会将那个引导页瞬间从隐藏显示，将隐藏样式从 `left: 1000px` 改为 `opacity: 0` 就修复了？？
+3. 浏览了下 `Medium`，并对 `.toLocalString()` 使用方式记录了一下
+4. `HL` 首页改版项目的播放器上报学习时长的逻辑又出了问题，明天需要再整一整
+
+## 2020-12-19 周六
+
+1. 将 `HL` 首页改版项目上报学习时长的逻辑从播放器中抽到了首页去控制，并将笃志加的 `debounce` 给去掉了，因为安卓好像执行这个有点问题，安卓执行播放器中的逻辑也有点问题，只能放到首页去控制
