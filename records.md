@@ -782,3 +782,32 @@
 2. 开发创新课程项目的 `Info` 页面，并将日历组件整合好了，但是还没有考虑好怎么传递参数的问题
 3. 开发创新课程项目的 `PurchasePopup` 组件，还没整合 `weex` 自己的 `TimePicker` 组件，明天整合一波，但也还没有用 `weex UI`  的 `Popup` 去进行弹出，明天参考一下笃志之前的代码看看怎么整合一波
 4. 创新课程项目的基本 `UI` 已经写完了，但是还有上述的一堆问题等着去整合
+
+## 2020-12-31 周四
+
+1. 今天把创新课程项目的基本 `UI` 与组件都写完了，但是发现了一个问题，就是 `TimePicker` 在安卓太丑了，想自己写一个，但是轮子太难造，选择明年再造。。。
+2. 啊这就到了 2020 年的最后一天了，到 5 点就不想写代码了呜呜呜
+
+## 2021-01-07 周四
+
+1. 研究了一手 `iOS` 怎么上传照片方便，开始用的自带的共享相册，但是晚上发现会压缩，还是用回网盘靠谱了
+
+2. 完善了一下专属语伴项目的 `UI`，专属权益那个 `benefits-item` 需要加多四个同样宽度的 `placeholder` 以适应不同宽度屏幕的手机，而 `PurchasedPopup` 这个组件需要调用 `wxc-popup` 自己的 `hide` 方法，再在调用的 `hide` 方法中 `$emit` 的 `wxcPopupOverlayClicked` 中接受处理的函数，再 `$emit('onClose')` 给父组件修改 `show` 的值才可以有关闭动画效果，代码如下：
+
+   ```js
+   <wxc-popup
+       ref="purchaesdPopup"
+       :show="show"
+       :height="580"
+       @wxcPopupOverlayClicked="$emit('onClose')"
+     >
+       <div class="exc-purchased-popup-wrapper">
+         <image
+           class="btn-close"
+           src="https://ali-hk-cdn.hellotalk8.com//upload/exc_icon_close.png"
+           @click="$refs.purchaesdPopup.hide()"
+         />
+        ...
+   ```
+
+   
