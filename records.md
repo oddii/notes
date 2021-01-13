@@ -1,4 +1,4 @@
-## 2020-09-11 周五
+## jie2020-09-11 周五
 
 1. 熟悉  `open_english_latest` 项目的业务逻辑
 
@@ -819,3 +819,57 @@
 
 1. 一来就在研究专属语伴的 `picker` 问题，使用 `weex-x-picker` 进行改造，它是使用一堆 `appear` 和 `disappear` 实现的，改了一天还是会有 `bug`，但常用的选项不太影响使用。。
 2. 开始整理一下要对接的接口，跟谢为讨论了一波，最终还是给我一个新的接口查询购买状态，而 `Android` 的微信已经能到付款的阶段，`iOS` 的还需要和笃志一起看看，`iOS` 的操作有点绕
+3. 跟上海部门的小姐姐讨论了一会关于专属语伴  `video` 封面配图的问题，最后她配了几波色之后还是决定去找设计师整一整，结果滑铁卢了？哈哈哈哈，设计师说要提需求，这周三前才能给我
+
+## 2021-01-12 周二
+
+1. 开始对接专属语伴超发负责的 `home` 接口，基本没有什么大问题，但是超发接口还没有完成，还需要等真实数据再联调一波
+2. 对接专属语伴的支付模块，因为 `Android` 调用的是 `payUtils.startPayment()`，而谢为那边也能正确处理这个模块，所以 `Android` 已经调通了支付，而 `iOS` 则先需要调用 `getWechatToken()` 获得用于微信支付的 `token`，再调用 `payUtils.startWechatPay()`，`getWechatToken()` 是之前 `php` 处理 `liveClass` 的接口，写死了 `liveClass` 的 `hpUserId`，所以专属语伴项目 `iOS` 微信支付无法获得监听的回调信息，需要配合谢为看看要怎么处理
+
+## 2021-01-13 周三
+
+1. 专属语伴的 `video` 封面配图还是用原来的第一版调了调色。。
+
+2. 看了一篇将 `TypeScript` `Utility Types` 的文章，其中
+
+   - `Pick<Type, Keys>`：返回一个指定 `Type` 中的某些指定的 `Keys` 的一个类型，如：
+
+     ```tsx
+     interface User {
+       id: string;
+       email: string;
+       password: string;
+     }
+     
+     //	表示传参时可以只传 email 与 password
+     function login(user: Pick<User, "email" | "password">): string {
+       //	...todos
+     }
+     
+     login({
+       email:'email@qq.com',
+       password:'123456'
+     })
+     ```
+
+   - `Omit<Type, Keys>`：返回一个指定 `Type` 中省略某些指定 `Keys` 的一个类型，如：
+
+     ```tsx
+     interface User {
+       id: string;
+       email: string;
+       password: string;
+     }
+     
+     //	表示传参时可以省略 User 中的 id
+     function addUser(user: Omit<User, "id">): string { 
+       //	...todos
+     }
+     
+     addUser({
+       email: 'email@qq.com',
+       password: '123456'
+     })
+     ```
+
+3. 
