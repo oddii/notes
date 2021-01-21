@@ -937,3 +937,37 @@
 3. 梳理了一波运营反馈的问题，修改那个马来西亚国旗显示的问题与约定商品 `id` 的配置，现在商品 `id` 都会在最后配上 `.天数数字` 去做根据商品天数一个映射商品的约定
 4. `zipper` 的 `Carousel` 开始简单地整合了一波
 
+## 2021-01-18 周一
+
+1. 专属语伴项目提出做分享的功能，直接调用 `single_page` 中的 `share.vue` 组件，并传入相应的参数即可，需要注意一下多语言
+2. 简单开发了一下 `zipper` 的 `FindScreen` 的 `HotRank` 与 `RegionContainer` 的结构，最下面的 `FlatList` 还未开始写样式
+
+## 2021-01-19 周二
+
+1. 继续开发专属语伴项目的分享功能，并将专属语伴项目上线到了正式环境
+
+2. `weex` 的 `WXApplicationDidBecomeActiveEvent` 监听完后怎么都不能移除了，又修改了一下 `iOS` 支付后的曲线救国反馈用户提醒的逻辑，现在直接 `iOS` 支付返回后的第一次监听到的 `WXApplicationDidBecomeActiveEvent` 回调中就把 `isStartWechatPayOnIOS` 赋值为 `false`
+
+   ```js
+   globalEvent.addEventListener("WXApplicationDidBecomeActiveEvent", () => {
+     if (this.isStartWechatPayOnIOS) {
+       this.handleFetchPayStatus();
+       this.handleClosePopup();
+       this.isStartWechatPayOnIOS = false;
+     }
+   });
+   ```
+
+3. `zipper` 的 `FindScreen` 的基本样式已经开发完成了，但是相关页面还未开发
+
+## 2021-01-20 周三
+
+1. 又跟运营、产品解释一番专属语伴的时间选择组件的问题，产品将这个问题提到了主 `app 4.2.3` 的版本中了，中午吃饭才知道这个版本已经快要做了？？
+2. 盼盼说测试环境从 `learnTab` 的 `banner` 进入专属语伴配置了 `source=banner` 也会报数据为 `source=learn`，排查代码发现在 `learnTab` 中就会默认写死一个 `source=learn`，而且客户端返回的 `js` 链接中也带了一个 `source=learn` ？但是正式环境却可以拿到配置的 `source=banner`？一脸懵逼
+3. `zipper` 的 `FindScreen` 进行了一个小改版，将之前绿洲发现全部博主的页面也加入了 `FindScreen` 中去了，用手机看了下打包后的，感觉实现显示效果要比模拟器中偏大，后续要将各种图片的尺寸写小，但是目前接到通知说又可能毕设要一人一题？还是先看会周刊等宝兰姐姐的通知在继续好了
+
+## 2021-01-21 周四
+
+1. 确定毕设要一人一题，那应该 `zipper` 会先告一段落了，想了一下新的毕设，感觉做个播放器会被觉得太简单，还不确定要做什么好到底
+2. 看了一下 `Medium` 与一些其他文章，然后又想起那个 `DOM Node` 与 `Element` 之间的区别，与笃志探讨了一下，基本弄起清楚了区别，**周末有空整理一下这个问题**
+3. 觉得专属语伴项目的数据比较少，就去看了一下专属语伴项目神策的数据，感觉有点不对劲，果然是进入时候上报的事件出问题了，调整了一下，将计时的代码放到报代码下面，并更换了一种计时的方式，以前是使用 `new Date().getTime()`，现在用的 `Date.now()`，明天再看一波数据有没有问题
